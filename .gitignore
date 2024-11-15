@@ -3,3 +3,4 @@
 vendor
 mysql
 .phpunit.result.cache
+var
