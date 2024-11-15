@@ -34,4 +34,19 @@ class DoctrineUserRepository implements UserRepositoryInterface
 
         return $user;
     }
+
+    public function save(User $user): void
+    {
+        $this->entityManager->persist($user);
+
+        $events = $user->pullEvents();
+        foreach ($events as $event) {
+            $this->eventDispatcher->dispatch($event);
+        }
+    }
+
+    public function flush(): void
+    {
+        $this->entityManager->flush();
+    }
 }
